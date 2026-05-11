@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../../res/app_resources.dart';
-import '../../../services/language_provider.dart';
-import '../../viewmodels/auth_viewmodel.dart';
+import '../../res/app_resources.dart';
+import '../../services/language_provider.dart';
+import 'auth_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -97,26 +97,17 @@ class _LoginViewState extends State<LoginView>
           Positioned(
             top: -100,
             right: -80,
-            child: _glowCircle(
-              300,
-              const Color(0xFF8B5CF6).withOpacity(0.15),
-            ),
+            child: _glowCircle(300, const Color(0xFF8B5CF6).withOpacity(0.15)),
           ),
           Positioned(
             bottom: -120,
             left: -100,
-            child: _glowCircle(
-              350,
-              AppColors.accent.withOpacity(0.10),
-            ),
+            child: _glowCircle(350, AppColors.accent.withOpacity(0.10)),
           ),
           Positioned(
             top: MediaQuery.of(context).size.height * 0.4,
             right: MediaQuery.of(context).size.width * 0.1,
-            child: _glowCircle(
-              150,
-              const Color(0xFF8B5CF6).withOpacity(0.08),
-            ),
+            child: _glowCircle(150, const Color(0xFF8B5CF6).withOpacity(0.08)),
           ),
 
           // المحتوى الرئيسي
@@ -142,13 +133,13 @@ class _LoginViewState extends State<LoginView>
       width: 440,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 48),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark 
-            ? Colors.white.withOpacity(0.05) 
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white.withOpacity(0.05)
             : Colors.white.withOpacity(0.8),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Theme.of(context).brightness == Brightness.dark 
-              ? Colors.white.withOpacity(0.12) 
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white.withOpacity(0.12)
               : AppColors.primary.withOpacity(0.2),
           width: 1.5,
         ),
@@ -207,8 +198,8 @@ class _LoginViewState extends State<LoginView>
               AppStrings.get(context, 'owner_login'),
               style: GoogleFonts.cairo(
                 fontSize: 14,
-                color: Theme.of(context).brightness == Brightness.dark 
-                    ? Colors.white54 
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white54
                     : AppColors.lightTextSecondary,
                 fontWeight: FontWeight.w400,
               ),
@@ -242,8 +233,8 @@ class _LoginViewState extends State<LoginView>
                   _obscurePassword
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: Theme.of(context).brightness == Brightness.dark 
-                      ? Colors.white38 
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white38
                       : AppColors.lightTextSecondary.withOpacity(0.5),
                   size: 20,
                 ),
@@ -282,8 +273,8 @@ class _LoginViewState extends State<LoginView>
                   Text(
                     AppStrings.get(context, 'remember_me'),
                     style: GoogleFonts.cairo(
-                      color: Theme.of(context).brightness == Brightness.dark 
-                          ? Colors.white70 
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white70
                           : AppColors.lightTextPrimary,
                       fontSize: 14,
                     ),
@@ -306,9 +297,7 @@ class _LoginViewState extends State<LoginView>
                   decoration: BoxDecoration(
                     color: Colors.red.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.red.withOpacity(0.3),
-                    ),
+                    border: Border.all(color: Colors.red.withOpacity(0.3)),
                   ),
                   child: Row(
                     children: [
@@ -397,9 +386,7 @@ class _LoginViewState extends State<LoginView>
                 child: OutlinedButton(
                   onPressed: vm.isLoading ? null : _handleGoogleLogin,
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(
-                      color: Colors.white.withOpacity(0.3),
-                    ),
+                    side: BorderSide(color: Colors.white.withOpacity(0.3)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
@@ -451,10 +438,10 @@ class _LoginViewState extends State<LoginView>
               children: [
                 Expanded(
                   child: Divider(
-                    color: Theme.of(context).brightness == Brightness.dark 
-                        ? Colors.white12 
-                        : AppColors.lightBorder, 
-                    thickness: 1
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white12
+                        : AppColors.lightBorder,
+                    thickness: 1,
                   ),
                 ),
                 Padding(
@@ -462,8 +449,8 @@ class _LoginViewState extends State<LoginView>
                   child: Text(
                     AppStrings.get(context, 'dashboard'),
                     style: GoogleFonts.cairo(
-                      color: Theme.of(context).brightness == Brightness.dark 
-                          ? Colors.white24 
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white24
                           : AppColors.lightTextSecondary.withOpacity(0.3),
                       fontSize: 12,
                     ),
@@ -471,10 +458,10 @@ class _LoginViewState extends State<LoginView>
                 ),
                 Expanded(
                   child: Divider(
-                    color: Theme.of(context).brightness == Brightness.dark 
-                        ? Colors.white12 
-                        : AppColors.lightBorder, 
-                    thickness: 1
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white12
+                        : AppColors.lightBorder,
+                    thickness: 1,
                   ),
                 ),
               ],
@@ -501,30 +488,30 @@ class _LoginViewState extends State<LoginView>
       validator: validator,
       textDirection: TextDirection.ltr,
       style: GoogleFonts.cairo(
-        color: Theme.of(context).brightness == Brightness.dark 
-            ? Colors.white 
-            : AppColors.lightTextPrimary, 
-        fontSize: 14
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white
+            : AppColors.lightTextPrimary,
+        fontSize: 14,
       ),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: GoogleFonts.cairo(
-          color: Theme.of(context).brightness == Brightness.dark 
-              ? Colors.white54 
-              : AppColors.lightTextSecondary, 
-          fontSize: 14
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white54
+              : AppColors.lightTextSecondary,
+          fontSize: 14,
         ),
         prefixIcon: Icon(icon, color: AppColors.primary, size: 20),
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: Theme.of(context).brightness == Brightness.dark 
-            ? Colors.white.withOpacity(0.06) 
+        fillColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white.withOpacity(0.06)
             : Colors.grey.withOpacity(0.05),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(
-            color: Theme.of(context).brightness == Brightness.dark 
-                ? Colors.white.withOpacity(0.12) 
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.12)
                 : AppColors.lightBorder,
             width: 1.5,
           ),

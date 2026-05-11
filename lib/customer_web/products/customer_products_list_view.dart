@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../customer_web/viewmodels/customer_product_viewmodel.dart';
-import '../../customer_web/viewmodels/customer_order_viewmodel.dart';
-import '../../customer_web/viewmodels/customer_auth_viewmodel.dart';
-import '../../models/product_model.dart';
-import 'auth/customer_login_view.dart';
-import 'customer_order_view.dart';
-import 'customer_profile_view.dart';
-import '../../../res/app_resources.dart';
-import '../../../services/language_provider.dart';
-import '../../../services/theme_provider.dart';
+import 'customer_product_viewmodel.dart';
+import '../orders/customer_order_viewmodel.dart';
+import '../auth/customer_auth_viewmodel.dart';
+import '../../owner_web/products/product_model.dart';
+import '../auth/customer_login_view.dart';
+import '../orders/customer_order_view.dart';
+import '../profile/customer_profile_view.dart';
+import '../../res/app_resources.dart';
+import '../../services/language_provider.dart';
+import '../../services/theme_provider.dart';
 
 /// صفحة عرض المنتجات للعميل (ويب) - قراءة فقط من Firebase
 class CustomerProductsListView extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/product_model.dart';
+import '../../owner_web/products/product_model.dart';
 import '../../services/firebase_product_service.dart';
 
 /// ViewModel للعميل - يجلب المنتجات من Firebase فقط (لا يوجد local DB)
@@ -42,11 +42,13 @@ class CustomerProductViewModel extends ChangeNotifier {
 
   void _applyFilters() {
     filteredProducts = _allProducts.where((p) {
-      final matchSearch = searchQuery.isEmpty ||
+      final matchSearch =
+          searchQuery.isEmpty ||
           p.name.contains(searchQuery) ||
           p.brand.contains(searchQuery);
-      final matchCategory = selectedCategory == 'all' || 
-          p.category == selectedCategory || 
+      final matchCategory =
+          selectedCategory == 'all' ||
+          p.category == selectedCategory ||
           _mapCategoryToKey(p.category) == selectedCategory;
       return matchSearch && matchCategory;
     }).toList();
@@ -55,11 +57,16 @@ class CustomerProductViewModel extends ChangeNotifier {
 
   String _mapCategoryToKey(String cat) {
     switch (cat) {
-      case 'الكل': return 'all';
-      case 'رجالي': return 'men';
-      case 'نسائي': return 'women';
-      case 'مختلط': return 'unisex';
-      default: return cat;
+      case 'الكل':
+        return 'all';
+      case 'رجالي':
+        return 'men';
+      case 'نسائي':
+        return 'women';
+      case 'مختلط':
+        return 'unisex';
+      default:
+        return cat;
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../models/order_model.dart';
-import '../../../models/product_model.dart';
-import '../../../services/firebase_order_service.dart';
-import '../../../services/firebase_product_service.dart';
+import '../../owner_web/orders/order_model.dart';
+import '../../owner_web/products/product_model.dart';
+import '../../services/firebase_order_service.dart';
+import '../../services/firebase_product_service.dart';
 
 /// ViewModel للعميل - إدارة سلة التسوق وإرسال الطلبات
 class CustomerOrderViewModel extends ChangeNotifier {
@@ -39,15 +39,17 @@ class CustomerOrderViewModel extends ChangeNotifier {
     if (idx >= 0) {
       _cartItems[idx].quantity += quantity;
     } else {
-      _cartItems.add(OrderItem(
-        productId: product.id,
-        productName: product.name,
-        brand: product.brand,
-        size: product.size,
-        price: product.price,
-        quantity: quantity,
-        maxStock: product.stock,
-      ));
+      _cartItems.add(
+        OrderItem(
+          productId: product.id,
+          productName: product.name,
+          brand: product.brand,
+          size: product.size,
+          price: product.price,
+          quantity: quantity,
+          maxStock: product.stock,
+        ),
+      );
     }
     notifyListeners();
     return true;

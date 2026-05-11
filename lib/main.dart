@@ -7,18 +7,18 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 // ─── صاحب العمل (الجوال) ───
-import 'owner_web/viewmodels/auth_viewmodel.dart';
-import 'owner_web/viewmodels/product_viewmodel.dart';
-import 'owner_web/viewmodels/owner_order_viewmodel.dart';
-import 'owner_web/views/auth/login_view.dart';
-import 'owner_web/views/dashboard/dashboard_view.dart';
-import 'owner_web/views/splash_view.dart';
+import 'owner_web/auth/auth_viewmodel.dart';
+import 'owner_web/products/product_viewmodel.dart';
+import 'owner_web/orders/owner_order_viewmodel.dart';
+import 'owner_web/auth/login_view.dart';
+import 'owner_web/dashboard/dashboard_view.dart';
+import 'owner_web/splash/splash_view.dart';
 
 // ─── العميل (الويب) ───
-import 'customer_web/viewmodels/customer_product_viewmodel.dart';
-import 'customer_web/viewmodels/customer_order_viewmodel.dart';
-import 'customer_web/viewmodels/customer_auth_viewmodel.dart';
-import 'customer_web/views/customer_products_list_view.dart';
+import 'customer_web/products/customer_product_viewmodel.dart';
+import 'customer_web/orders/customer_order_viewmodel.dart';
+import 'customer_web/auth/customer_auth_viewmodel.dart';
+import 'customer_web/products/customer_products_list_view.dart';
 import 'services/language_provider.dart';
 import 'services/theme_provider.dart';
 import 'res/app_resources.dart';

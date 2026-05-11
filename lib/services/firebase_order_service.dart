@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/order_model.dart';
+import '../owner_web/orders/order_model.dart';
 
 /// خدمة Firebase للطلبات
 class FirebaseOrderService {

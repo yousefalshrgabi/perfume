@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../models/order_model.dart';
-import '../../../services/firebase_order_service.dart';
-import 'product_viewmodel.dart';
+import 'order_model.dart';
+import '../../services/firebase_order_service.dart';
+import '../products/product_viewmodel.dart';
 
 /// ViewModel للمالك - إدارة الطلبات (قبول / رفض)
 class OwnerOrderViewModel extends ChangeNotifier {
@@ -20,7 +20,7 @@ class OwnerOrderViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       await _service.updateOrderStatus(order.id, OrderStatus.accepted);
-      
+
       // ملاحظة: تم إنقاص المخزون مسبقاً عند إرسال الطلب من قبل العميل
       // فلا حاجة لإنقاصه مرة أخرى هنا
 
@@ -39,7 +39,7 @@ class OwnerOrderViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       await _service.updateOrderStatus(order.id, OrderStatus.cancelled);
-      
+
       // إرجاع الكمية للمخزون (لأنها حُجزت عند إنشاء الطلب)
       for (var item in order.items) {
         await productVm.increaseStock(item.productId, item.quantity);

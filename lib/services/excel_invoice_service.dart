@@ -1,7 +1,7 @@
 import 'package:excel/excel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
-import '../models/order_model.dart';
+import '../owner_web/orders/order_model.dart';
 import '../res/app_resources.dart';
 
 class ExcelInvoiceService {

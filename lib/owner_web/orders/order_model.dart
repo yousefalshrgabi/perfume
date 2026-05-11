@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../res/app_resources.dart';
+import '../../res/app_resources.dart';
 
 /// عنصر داخل الطلب
 class OrderItem {
@@ -25,24 +25,24 @@ class OrderItem {
   double get total => price * quantity;
 
   Map<String, dynamic> toMap() => {
-        'productId': productId,
-        'productName': productName,
-        'brand': brand,
-        'size': size,
-        'price': price,
-        'quantity': quantity,
-        'maxStock': maxStock,
-      };
+    'productId': productId,
+    'productName': productName,
+    'brand': brand,
+    'size': size,
+    'price': price,
+    'quantity': quantity,
+    'maxStock': maxStock,
+  };
 
   factory OrderItem.fromMap(Map<String, dynamic> map) => OrderItem(
-        productId: map['productId'] ?? '',
-        productName: map['productName'] ?? '',
-        brand: map['brand'] ?? '',
-        size: map['size'] ?? '',
-        price: (map['price'] ?? 0).toDouble(),
-        quantity: (map['quantity'] ?? 1).toInt(),
-        maxStock: (map['maxStock'] ?? 0).toInt(),
-      );
+    productId: map['productId'] ?? '',
+    productName: map['productName'] ?? '',
+    brand: map['brand'] ?? '',
+    size: map['size'] ?? '',
+    price: (map['price'] ?? 0).toDouble(),
+    quantity: (map['quantity'] ?? 1).toInt(),
+    maxStock: (map['maxStock'] ?? 0).toInt(),
+  );
 }
 
 /// حالة الطلب
@@ -111,15 +111,15 @@ class OrderModel {
   int get totalItems => items.fold(0, (sum, item) => sum + item.quantity);
 
   Map<String, dynamic> toFirestore() => {
-        'customerName': customerName,
-        'customerPhone': customerPhone,
-        'customerAddress': customerAddress,
-        'items': items.map((i) => i.toMap()).toList(),
-        'status': status.value,
-        'createdAt': Timestamp.fromDate(createdAt),
-        'notes': notes ?? '',
-        if (customerId != null) 'customerId': customerId,
-      };
+    'customerName': customerName,
+    'customerPhone': customerPhone,
+    'customerAddress': customerAddress,
+    'items': items.map((i) => i.toMap()).toList(),
+    'status': status.value,
+    'createdAt': Timestamp.fromDate(createdAt),
+    'notes': notes ?? '',
+    if (customerId != null) 'customerId': customerId,
+  };
 
   factory OrderModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
@@ -139,14 +139,14 @@ class OrderModel {
   }
 
   OrderModel copyWith({OrderStatus? status}) => OrderModel(
-        id: id,
-        customerName: customerName,
-        customerPhone: customerPhone,
-        customerAddress: customerAddress,
-        items: items,
-        status: status ?? this.status,
-        createdAt: createdAt,
-        notes: notes,
-        customerId: customerId,
-      );
+    id: id,
+    customerName: customerName,
+    customerPhone: customerPhone,
+    customerAddress: customerAddress,
+    items: items,
+    status: status ?? this.status,
+    createdAt: createdAt,
+    notes: notes,
+    customerId: customerId,
+  );
 }

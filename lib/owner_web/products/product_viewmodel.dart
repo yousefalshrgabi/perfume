@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:excel/excel.dart';
-import '../../models/product_model.dart';
+import 'product_model.dart';
 import '../../services/firebase_product_service.dart';
 
 /// ViewModel للمنتجات - يخزن في Hive أولاً ثم يرفع لـ Firebase
@@ -249,7 +249,7 @@ class ProductViewModel extends ChangeNotifier {
     if (idx != -1) {
       final p = products[idx];
       final newStock = (p.stock - quantity) < 0 ? 0 : p.stock - quantity;
-      
+
       final updated = p.copyWith(stock: newStock, isSynced: false);
       await _box.put(id, updated.toMap());
       products[idx] = updated;
@@ -271,7 +271,7 @@ class ProductViewModel extends ChangeNotifier {
     if (idx != -1) {
       final p = products[idx];
       final newStock = p.stock + quantity;
-      
+
       final updated = p.copyWith(stock: newStock, isSynced: false);
       await _box.put(id, updated.toMap());
       products[idx] = updated;

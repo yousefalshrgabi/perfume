@@ -34,8 +34,14 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.lightTextPrimary),
     ),
     textTheme: TextTheme(
-      displayLarge: GoogleFonts.cairo(color: AppColors.lightTextPrimary, fontWeight: FontWeight.bold),
-      titleLarge: GoogleFonts.cairo(color: AppColors.lightTextPrimary, fontWeight: FontWeight.bold),
+      displayLarge: GoogleFonts.cairo(
+        color: AppColors.lightTextPrimary,
+        fontWeight: FontWeight.bold,
+      ),
+      titleLarge: GoogleFonts.cairo(
+        color: AppColors.lightTextPrimary,
+        fontWeight: FontWeight.bold,
+      ),
       bodyLarge: GoogleFonts.cairo(color: AppColors.lightTextPrimary),
       bodyMedium: GoogleFonts.cairo(color: AppColors.lightTextSecondary),
     ),
@@ -89,8 +95,14 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
     ),
     textTheme: TextTheme(
-      displayLarge: GoogleFonts.cairo(color: AppColors.darkTextPrimary, fontWeight: FontWeight.bold),
-      titleLarge: GoogleFonts.cairo(color: AppColors.darkTextPrimary, fontWeight: FontWeight.bold),
+      displayLarge: GoogleFonts.cairo(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.bold,
+      ),
+      titleLarge: GoogleFonts.cairo(
+        color: AppColors.darkTextPrimary,
+        fontWeight: FontWeight.bold,
+      ),
       bodyLarge: GoogleFonts.cairo(color: AppColors.darkTextPrimary),
       bodyMedium: GoogleFonts.cairo(color: AppColors.darkTextSecondary),
     ),

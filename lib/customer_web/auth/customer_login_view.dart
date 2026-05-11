@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../viewmodels/customer_auth_viewmodel.dart';
+import 'customer_auth_viewmodel.dart';
 import 'customer_register_view.dart';
-import '../../../res/app_resources.dart';
+import '../../res/app_resources.dart';
 
 class CustomerLoginView extends StatefulWidget {
   const CustomerLoginView({super.key});
@@ -27,13 +27,13 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
 
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     final vm = context.read<CustomerAuthViewModel>();
     final success = await vm.login(
       _emailController.text.trim(),
       _passwordController.text,
     );
-    
+
     if (success && mounted) {
       Navigator.pop(context); // العودة للصفحة السابقة بعد الدخول
     }
@@ -48,7 +48,10 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           AppStrings.get(context, 'customer_login_title'),
-          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
+          style: GoogleFonts.cairo(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
@@ -61,14 +64,20 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1)),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+              ),
             ),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.person_outline, size: 60, color: Color(0xFF8B5CF6)),
+                  const Icon(
+                    Icons.person_outline,
+                    size: 60,
+                    color: Color(0xFF8B5CF6),
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     AppStrings.get(context, 'welcome_back'),
@@ -79,18 +88,21 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // رسالة الخطأ
                   Consumer<CustomerAuthViewModel>(
                     builder: (context, vm, _) {
-                      if (vm.errorMessage == null) return const SizedBox.shrink();
+                      if (vm.errorMessage == null)
+                        return const SizedBox.shrink();
                       return Container(
                         margin: const EdgeInsets.only(bottom: 16),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: Colors.red.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.red.withOpacity(0.3)),
+                          border: Border.all(
+                            color: Colors.red.withOpacity(0.3),
+                          ),
                         ),
                         child: Text(
                           AppStrings.get(context, vm.errorMessage!),
@@ -104,42 +116,74 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
+                    style: GoogleFonts.cairo(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                     decoration: InputDecoration(
                       labelText: AppStrings.get(context, 'email'),
-                      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
-                      prefixIcon: const Icon(Icons.email, color: Color(0xFF8B5CF6)),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.05),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                    ),
-                    validator: (v) => v!.isEmpty ? AppStrings.get(context, 'required_field') : null,
-                  ),
-                  const SizedBox(height: 16),
-                  
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
-                    decoration: InputDecoration(
-                      labelText: AppStrings.get(context, 'password'),
-                      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
-                      prefixIcon: const Icon(Icons.lock, color: Color(0xFF8B5CF6)),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                        ),
-                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      labelStyle: GoogleFonts.cairo(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.5),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.email,
+                        color: Color(0xFF8B5CF6),
                       ),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.05),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    validator: (v) => v!.isEmpty ? AppStrings.get(context, 'required_field') : null,
+                    validator: (v) => v!.isEmpty
+                        ? AppStrings.get(context, 'required_field')
+                        : null,
+                  ),
+                  const SizedBox(height: 16),
+
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: _obscurePassword,
+                    style: GoogleFonts.cairo(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: AppStrings.get(context, 'password'),
+                      labelStyle: GoogleFonts.cairo(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.5),
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xFF8B5CF6),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.5),
+                        ),
+                        onPressed: () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.05),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    validator: (v) => v!.isEmpty
+                        ? AppStrings.get(context, 'required_field')
+                        : null,
                   ),
                   const SizedBox(height: 24),
-                  
+
                   Consumer<CustomerAuthViewModel>(
                     builder: (context, vm, _) => SizedBox(
                       width: double.infinity,
@@ -147,27 +191,43 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF8B5CF6),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                         onPressed: vm.isLoading ? null : _handleLogin,
-                        child: vm.isLoading 
-                            ? const CircularProgressIndicator(color: Colors.white)
-                            : Text(AppStrings.get(context, 'login'), style: GoogleFonts.cairo(color: Colors.white, fontSize: 18)),
+                        child: vm.isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                AppStrings.get(context, 'login'),
+                                style: GoogleFonts.cairo(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  
+
                   TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => const CustomerRegisterView()),
+                        MaterialPageRoute(
+                          builder: (_) => const CustomerRegisterView(),
+                        ),
                       );
                     },
                     child: Text(
                       AppStrings.get(context, 'no_account_yet'),
-                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                      style: GoogleFonts.cairo(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.7),
+                      ),
                     ),
                   ),
                 ],

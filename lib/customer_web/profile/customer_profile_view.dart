@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart' as intl;
-import '../../models/order_model.dart';
-import '../viewmodels/customer_auth_viewmodel.dart';
-import '../viewmodels/customer_order_viewmodel.dart';
-import 'auth/customer_login_view.dart';
+import '../../owner_web/orders/order_model.dart';
+import '../auth/customer_auth_viewmodel.dart';
+import '../orders/customer_order_viewmodel.dart';
+import '../auth/customer_login_view.dart';
 import '../../res/app_resources.dart';
 import '../../services/language_provider.dart';
 

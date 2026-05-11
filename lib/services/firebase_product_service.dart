@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/product_model.dart';
+import '../owner_web/products/product_model.dart';
 
 /// خدمة Firebase - تتعامل مع Firestore مباشرةً
 class FirebaseProductService {

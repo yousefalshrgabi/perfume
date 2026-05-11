@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/product_viewmodel.dart';
-import '../../../../models/product_model.dart';
-import '../../../res/app_resources.dart';
+import 'product_viewmodel.dart';
+import 'product_model.dart';
+import '../../res/app_resources.dart';
 
 /// صفحة تعديل بيانات المنتج
 class EditProductView extends StatefulWidget {

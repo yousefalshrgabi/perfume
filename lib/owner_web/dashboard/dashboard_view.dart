@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../viewmodels/auth_viewmodel.dart';
-import '../../viewmodels/product_viewmodel.dart';
+import '../auth/auth_viewmodel.dart';
+import '../products/product_viewmodel.dart';
 import '../products/products_view.dart';
-import 'owner_order_view.dart';
-import '../../../res/app_resources.dart';
-import '../../../services/language_provider.dart';
-import '../../../services/theme_provider.dart';
+import '../orders/owner_order_view.dart';
+import '../../res/app_resources.dart';
+import '../../services/language_provider.dart';
+import '../../services/theme_provider.dart';
 
 /// لوحة التحكم الرئيسية لصاحب العمل (جوال)
 class DashboardView extends StatelessWidget {
@@ -38,7 +38,9 @@ class DashboardView extends StatelessWidget {
                         Text(
                           AppStrings.get(context, 'hello'),
                           style: GoogleFonts.cairo(
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.6),
                             fontSize: 14,
                           ),
                         ),
@@ -55,19 +57,25 @@ class DashboardView extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () => context.read<ThemeProvider>().toggleTheme(),
+                          onPressed: () =>
+                              context.read<ThemeProvider>().toggleTheme(),
                           icon: Icon(
-                            context.watch<ThemeProvider>().isDarkMode 
-                              ? Icons.light_mode_rounded 
-                              : Icons.dark_mode_rounded,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            context.watch<ThemeProvider>().isDarkMode
+                                ? Icons.light_mode_rounded
+                                : Icons.dark_mode_rounded,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.6),
                           ),
                         ),
                         IconButton(
-                          onPressed: () => context.read<LanguageProvider>().toggleLanguage(),
+                          onPressed: () =>
+                              context.read<LanguageProvider>().toggleLanguage(),
                           icon: Icon(
                             Icons.translate_rounded,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.6),
                           ),
                           tooltip: AppStrings.get(context, 'change_language'),
                         ),
@@ -80,7 +88,9 @@ class DashboardView extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.logout_rounded,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.6),
                           ),
                           tooltip: AppStrings.get(context, 'logout'),
                         ),
@@ -92,11 +102,7 @@ class DashboardView extends StatelessWidget {
                 // شعار التطبيق
                 Row(
                   children: [
-                    Icon(
-                      Icons.spa_rounded,
-                      color: AppColors.primary,
-                      size: 20,
-                    ),
+                    Icon(Icons.spa_rounded, color: AppColors.primary, size: 20),
                     const SizedBox(width: 6),
                     Text(
                       AppStrings.get(context, 'app_title'),
@@ -146,7 +152,10 @@ class DashboardView extends StatelessWidget {
                         builder: (context, vm, _) => _InfoCard(
                           icon: Icons.spa_rounded,
                           title: '${vm.products.length}',
-                          subtitle: AppStrings.get(context, 'registered_products'),
+                          subtitle: AppStrings.get(
+                            context,
+                            'registered_products',
+                          ),
                           color: const Color(0xFF06B6D4),
                         ),
                       ),
@@ -156,7 +165,10 @@ class DashboardView extends StatelessWidget {
                           icon: Icons.cloud_done_rounded,
                           title:
                               '${vm.products.where((p) => p.isSynced).length}',
-                          subtitle: AppStrings.get(context, 'uploaded_firebase'),
+                          subtitle: AppStrings.get(
+                            context,
+                            'uploaded_firebase',
+                          ),
                           color: AppColors.secondary,
                         ),
                       ),
@@ -251,8 +263,8 @@ class _ActionCard extends StatelessWidget {
             Text(
               subtitle,
               style: GoogleFonts.cairo(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), 
-                fontSize: 11
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                fontSize: 11,
               ),
               textAlign: TextAlign.center,
             ),
@@ -303,8 +315,8 @@ class _InfoCard extends StatelessWidget {
           Text(
             subtitle,
             style: GoogleFonts.cairo(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), 
-              fontSize: 11
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              fontSize: 11,
             ),
             textAlign: TextAlign.center,
           ),

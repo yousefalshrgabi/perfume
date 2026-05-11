@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../res/app_resources.dart';
+import '../../res/app_resources.dart';
 import 'dart:async';
 
 class SplashView extends StatefulWidget {

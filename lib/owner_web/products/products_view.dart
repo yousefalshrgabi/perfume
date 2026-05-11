@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
-import '../../viewmodels/product_viewmodel.dart';
-import '../../../../models/product_model.dart';
+import 'product_viewmodel.dart';
+import 'product_model.dart';
 import 'edit_product_view.dart';
-import '../../../res/app_resources.dart';
+import '../../res/app_resources.dart';
 
 class ProductsView extends StatefulWidget {
   const ProductsView({super.key});
@@ -34,10 +34,14 @@ class _ProductsViewState extends State<ProductsView> {
         title: Text(
           AppStrings.get(context, 'manage_products'),
           style: GoogleFonts.cairo(
-              color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
         actions: [
           // مؤشر المنتجات غير المرفوعة
           Consumer<ProductViewModel>(
@@ -45,13 +49,18 @@ class _ProductsViewState extends State<ProductsView> {
                 ? Padding(
                     padding: const EdgeInsets.only(left: 4),
                     child: Tooltip(
-                      message: AppStrings.get(context, 'pending_sync_count').replaceFirst('{count}', vm.pendingCount.toString()),
+                      message: AppStrings.get(
+                        context,
+                        'pending_sync_count',
+                      ).replaceFirst('{count}', vm.pendingCount.toString()),
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.cloud_off_rounded,
-                                color: Colors.orange),
+                            icon: const Icon(
+                              Icons.cloud_off_rounded,
+                              color: Colors.orange,
+                            ),
                             onPressed: () => vm.syncPendingProducts(),
                           ),
                           Positioned(
@@ -66,9 +75,10 @@ class _ProductsViewState extends State<ProductsView> {
                               child: Text(
                                 '${vm.pendingCount}',
                                 style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -81,8 +91,10 @@ class _ProductsViewState extends State<ProductsView> {
           // زر رفع Excel
           IconButton(
             tooltip: AppStrings.get(context, 'import_excel'),
-            icon: const Icon(Icons.upload_file_rounded,
-                color: Color(0xFF8B5CF6)),
+            icon: const Icon(
+              Icons.upload_file_rounded,
+              color: Color(0xFF8B5CF6),
+            ),
             onPressed: () => _importExcel(context),
           ),
         ],
@@ -94,9 +106,15 @@ class _ProductsViewState extends State<ProductsView> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(AppStrings.parseMessage(context, vm.message!),
-                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onPrimary)),
-                  backgroundColor: vm.message!.contains('error') || vm.message!.contains('error_msg')
+                  content: Text(
+                    AppStrings.parseMessage(context, vm.message!),
+                    style: GoogleFonts.cairo(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  backgroundColor:
+                      vm.message!.contains('error') ||
+                          vm.message!.contains('error_msg')
                       ? Colors.red.shade700
                       : const Color(0xFF8B5CF6),
                 ),
@@ -107,8 +125,8 @@ class _ProductsViewState extends State<ProductsView> {
 
           if (vm.isLoading && vm.products.isEmpty) {
             return const Center(
-                child: CircularProgressIndicator(
-                    color: Color(0xFF8B5CF6)));
+              child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
+            );
           }
 
           if (vm.products.isEmpty) {
@@ -116,16 +134,31 @@ class _ProductsViewState extends State<ProductsView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.spa_rounded,
-                      color: Color(0xFF8B5CF6), size: 64),
+                  const Icon(
+                    Icons.spa_rounded,
+                    color: Color(0xFF8B5CF6),
+                    size: 64,
+                  ),
                   const SizedBox(height: 16),
-                  Text(AppStrings.get(context, 'no_products_yet'),
-                      style: GoogleFonts.cairo(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 18)),
+                  Text(
+                    AppStrings.get(context, 'no_products_yet'),
+                    style: GoogleFonts.cairo(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.5),
+                      fontSize: 18,
+                    ),
+                  ),
                   const SizedBox(height: 8),
-                  Text(AppStrings.get(context, 'add_product_hint'),
-                      style: GoogleFonts.cairo(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4), fontSize: 14)),
+                  Text(
+                    AppStrings.get(context, 'add_product_hint'),
+                    style: GoogleFonts.cairo(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.4),
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
             );
@@ -146,8 +179,10 @@ class _ProductsViewState extends State<ProductsView> {
         onPressed: () => _showAddDialog(context),
         backgroundColor: const Color(0xFF8B5CF6),
         icon: const Icon(Icons.add, color: Colors.white),
-        label: Text(AppStrings.get(context, 'add_product'),
-            style: GoogleFonts.cairo(color: Colors.white)),
+        label: Text(
+          AppStrings.get(context, 'add_product'),
+          style: GoogleFonts.cairo(color: Colors.white),
+        ),
       ),
     );
   }
@@ -162,9 +197,9 @@ class _ProductsViewState extends State<ProductsView> {
 
     if (result != null && result.files.single.bytes != null) {
       if (context.mounted) {
-        await context
-            .read<ProductViewModel>()
-            .importFromExcel(result.files.single.bytes!);
+        await context.read<ProductViewModel>().importFromExcel(
+          result.files.single.bytes!,
+        );
       }
     }
   }
@@ -184,37 +219,80 @@ class _ProductsViewState extends State<ProductsView> {
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
           backgroundColor: Theme.of(context).colorScheme.surface,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          title: Text(AppStrings.get(context, 'add_new_product'),
-              style: GoogleFonts.cairo(
-                  color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Text(
+            AppStrings.get(context, 'add_new_product'),
+            style: GoogleFonts.cairo(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _field(nameCtrl, AppStrings.get(context, 'perfume_name'), Icons.spa_rounded),
-                _field(brandCtrl, AppStrings.get(context, 'brand_label'), Icons.branding_watermark),
-                _field(priceCtrl, AppStrings.get(context, 'price_with_currency').replaceFirst('{currency}', AppStrings.get(context, 'currency')), Icons.attach_money,
-                    isNumber: true),
-                _field(sizeCtrl, AppStrings.get(context, 'size_hint'), Icons.straighten),
-                _field(stockCtrl, AppStrings.get(context, 'stock_quantity'), Icons.inventory_2,
-                    isNumber: true),
-                _field(descCtrl, AppStrings.get(context, 'description_label'), Icons.notes, maxLines: 2),
+                _field(
+                  nameCtrl,
+                  AppStrings.get(context, 'perfume_name'),
+                  Icons.spa_rounded,
+                ),
+                _field(
+                  brandCtrl,
+                  AppStrings.get(context, 'brand_label'),
+                  Icons.branding_watermark,
+                ),
+                _field(
+                  priceCtrl,
+                  AppStrings.get(context, 'price_with_currency').replaceFirst(
+                    '{currency}',
+                    AppStrings.get(context, 'currency'),
+                  ),
+                  Icons.attach_money,
+                  isNumber: true,
+                ),
+                _field(
+                  sizeCtrl,
+                  AppStrings.get(context, 'size_hint'),
+                  Icons.straighten,
+                ),
+                _field(
+                  stockCtrl,
+                  AppStrings.get(context, 'stock_quantity'),
+                  Icons.inventory_2,
+                  isNumber: true,
+                ),
+                _field(
+                  descCtrl,
+                  AppStrings.get(context, 'description_label'),
+                  Icons.notes,
+                  maxLines: 2,
+                ),
                 const SizedBox(height: 12),
                 // اختيار الفئة
                 DropdownButtonFormField<String>(
                   value: selectedCategory,
                   dropdownColor: Theme.of(context).colorScheme.surface,
-                  decoration: _inputDecoration(AppStrings.get(context, 'category_label'), Icons.category),
-                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
+                  decoration: _inputDecoration(
+                    AppStrings.get(context, 'category_label'),
+                    Icons.category,
+                  ),
+                  style: GoogleFonts.cairo(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   items: ['men', 'women', 'unisex']
-                      .map((key) => DropdownMenuItem(
+                      .map(
+                        (key) => DropdownMenuItem(
                           value: key,
-                          child: Text(AppStrings.get(context, key), style: GoogleFonts.cairo())))
+                          child: Text(
+                            AppStrings.get(context, key),
+                            style: GoogleFonts.cairo(),
+                          ),
+                        ),
+                      )
                       .toList(),
-                  onChanged: (v) =>
-                      setDialogState(() => selectedCategory = v!),
+                  onChanged: (v) => setDialogState(() => selectedCategory = v!),
                 ),
               ],
             ),
@@ -222,27 +300,36 @@ class _ProductsViewState extends State<ProductsView> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: Text(AppStrings.get(context, 'cancel'),
-                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+              child: Text(
+                AppStrings.get(context, 'cancel'),
+                style: GoogleFonts.cairo(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.6),
+                ),
+              ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF8B5CF6)),
+                backgroundColor: const Color(0xFF8B5CF6),
+              ),
               onPressed: () async {
                 if (nameCtrl.text.isEmpty || priceCtrl.text.isEmpty) return;
                 Navigator.pop(ctx);
                 await context.read<ProductViewModel>().addProduct(
-                      name: nameCtrl.text.trim(),
-                      brand: brandCtrl.text.trim(),
-                      price: double.tryParse(priceCtrl.text) ?? 0,
-                      size: sizeCtrl.text.trim(),
-                      category: selectedCategory,
-                      description: descCtrl.text.trim(),
-                      stock: int.tryParse(stockCtrl.text) ?? 0,
-                    );
+                  name: nameCtrl.text.trim(),
+                  brand: brandCtrl.text.trim(),
+                  price: double.tryParse(priceCtrl.text) ?? 0,
+                  size: sizeCtrl.text.trim(),
+                  category: selectedCategory,
+                  description: descCtrl.text.trim(),
+                  stock: int.tryParse(stockCtrl.text) ?? 0,
+                );
               },
-              child: Text(AppStrings.get(context, 'add_product'),
-                  style: GoogleFonts.cairo(color: Colors.white)),
+              child: Text(
+                AppStrings.get(context, 'add_product'),
+                style: GoogleFonts.cairo(color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -251,13 +338,20 @@ class _ProductsViewState extends State<ProductsView> {
   }
 
   // مساعد: حقل نص
-  Widget _field(TextEditingController ctrl, String label, IconData icon,
-      {bool isNumber = false, int maxLines = 1}) {
+  Widget _field(
+    TextEditingController ctrl,
+    String label,
+    IconData icon, {
+    bool isNumber = false,
+    int maxLines = 1,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: TextField(
         controller: ctrl,
-        style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
+        style: GoogleFonts.cairo(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
         keyboardType: isNumber ? TextInputType.number : TextInputType.text,
         maxLines: maxLines,
         textDirection: TextDirection.rtl,
@@ -269,7 +363,9 @@ class _ProductsViewState extends State<ProductsView> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
+      labelStyle: GoogleFonts.cairo(
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+      ),
       prefixIcon: Icon(icon, color: const Color(0xFF8B5CF6), size: 20),
       filled: true,
       fillColor: Colors.white.withOpacity(0.05),
@@ -309,8 +405,7 @@ class _ProductCard extends StatelessWidget {
         border: Border.all(color: const Color(0xFF8B5CF6).withOpacity(0.3)),
       ),
       child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -319,8 +414,9 @@ class _ProductCard extends StatelessWidget {
               child: Text(
                 product.name.isNotEmpty ? product.name[0] : '؟',
                 style: GoogleFonts.cairo(
-                    color: const Color(0xFF8B5CF6),
-                    fontWeight: FontWeight.bold),
+                  color: const Color(0xFF8B5CF6),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             // أيقونة حالة المزامنة
@@ -328,12 +424,14 @@ class _ProductCard extends StatelessWidget {
               bottom: -2,
               right: -2,
               child: Tooltip(
-                message: product.isSynced ? AppStrings.get(context, 'uploaded_firebase') : AppStrings.get(context, 'pending_sync'),
+                message: product.isSynced
+                    ? AppStrings.get(context, 'uploaded_firebase')
+                    : AppStrings.get(context, 'pending_sync'),
                 child: CircleAvatar(
                   radius: 7,
                   backgroundColor: product.isSynced
                       ? const Color(0xFF10B981) // أخضر = مرفوع
-                      : Colors.orange,          // برتقالي = أوفلاين
+                      : Colors.orange, // برتقالي = أوفلاين
                   child: Icon(
                     product.isSynced ? Icons.cloud_done : Icons.cloud_off,
                     size: 9,
@@ -347,7 +445,9 @@ class _ProductCard extends StatelessWidget {
         title: Text(
           product.name,
           style: GoogleFonts.cairo(
-              color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w600),
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.w600,
+          ),
           textDirection: TextDirection.rtl,
         ),
         subtitle: Column(
@@ -355,7 +455,10 @@ class _ProductCard extends StatelessWidget {
           children: [
             Text(
               '${product.brand} • ${product.category}',
-              style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), fontSize: 12),
+              style: GoogleFonts.cairo(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                fontSize: 12,
+              ),
               textDirection: TextDirection.rtl,
             ),
             const SizedBox(height: 2),
@@ -363,8 +466,10 @@ class _ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFF8B5CF6).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8),
@@ -372,16 +477,21 @@ class _ProductCard extends StatelessWidget {
                   child: Text(
                     '${product.price.toStringAsFixed(0)} ${AppStrings.get(context, 'currency')}',
                     style: GoogleFonts.cairo(
-                        color: const Color(0xFF8B5CF6),
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
+                      color: const Color(0xFF8B5CF6),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   '${AppStrings.get(context, 'stock_label')}: ${product.stock}',
-                  style:
-                      GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4), fontSize: 11),
+                  style: GoogleFonts.cairo(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.4),
+                    fontSize: 11,
+                  ),
                 ),
               ],
             ),
@@ -392,19 +502,26 @@ class _ProductCard extends StatelessWidget {
           children: [
             // زر تعديل
             IconButton(
-              icon: const Icon(Icons.edit_rounded,
-                  color: Color(0xFF8B5CF6), size: 20),
+              icon: const Icon(
+                Icons.edit_rounded,
+                color: Color(0xFF8B5CF6),
+                size: 20,
+              ),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => EditProductView(product: product)),
+                  builder: (_) => EditProductView(product: product),
+                ),
               ),
               tooltip: AppStrings.get(context, 'edit_label'),
             ),
             // زر حذف
             IconButton(
-              icon: Icon(Icons.delete_rounded,
-                  color: Colors.red.shade400, size: 20),
+              icon: Icon(
+                Icons.delete_rounded,
+                color: Colors.red.shade400,
+                size: 20,
+              ),
               onPressed: () => _confirmDelete(context),
               tooltip: AppStrings.get(context, 'delete_label'),
             ),
@@ -419,25 +536,43 @@ class _ProductCard extends StatelessWidget {
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title: Text(AppStrings.get(context, 'delete_product'),
-            style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface)),
-        content: Text(AppStrings.get(context, 'confirm_delete_msg').replaceFirst('{name}', product.name),
-            style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
+        title: Text(
+          AppStrings.get(context, 'delete_product'),
+          style: GoogleFonts.cairo(
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+        content: Text(
+          AppStrings.get(
+            context,
+            'confirm_delete_msg',
+          ).replaceFirst('{name}', product.name),
+          style: GoogleFonts.cairo(
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child:
-                Text(AppStrings.get(context, 'cancel'), style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
+            child: Text(
+              AppStrings.get(context, 'cancel'),
+              style: GoogleFonts.cairo(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              ),
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red.shade700),
+              backgroundColor: Colors.red.shade700,
+            ),
             onPressed: () {
               Navigator.pop(context);
               context.read<ProductViewModel>().deleteProduct(product.id);
             },
-            child:
-                Text(AppStrings.get(context, 'delete_label'), style: GoogleFonts.cairo(color: Colors.white)),
+            child: Text(
+              AppStrings.get(context, 'delete_label'),
+              style: GoogleFonts.cairo(color: Colors.white),
+            ),
           ),
         ],
       ),

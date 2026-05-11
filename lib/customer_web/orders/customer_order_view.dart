@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../viewmodels/customer_order_viewmodel.dart';
-import '../viewmodels/customer_auth_viewmodel.dart';
-import 'auth/customer_login_view.dart';
-import '../../../res/app_resources.dart';
+import 'customer_order_viewmodel.dart';
+import '../auth/customer_auth_viewmodel.dart';
+import '../auth/customer_login_view.dart';
+import '../../res/app_resources.dart';
 
 class CustomerOrderView extends StatefulWidget {
   const CustomerOrderView({super.key});
