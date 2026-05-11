@@ -62,13 +62,13 @@ class _EditProductViewState extends State<EditProductView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D1A),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0A2E),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
           AppStrings.get(context, 'edit_product_title'),
           style: GoogleFonts.cairo(
-              color: Colors.white, fontWeight: FontWeight.bold),
+              color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -99,9 +99,9 @@ class _EditProductViewState extends State<EditProductView> {
             // اختيار الفئة
             DropdownButtonFormField<String>(
               value: selectedCategory,
-              dropdownColor: const Color(0xFF1A0A2E),
+              dropdownColor: Theme.of(context).colorScheme.surface,
               decoration: _inputDecoration(AppStrings.get(context, 'category_label'), Icons.category),
-              style: GoogleFonts.cairo(color: Colors.white),
+              style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
               items: ['men', 'women', 'unisex']
                   .map((key) => DropdownMenuItem(
                       value: key, child: Text(AppStrings.get(context, key), style: GoogleFonts.cairo())))
@@ -179,7 +179,7 @@ class _EditProductViewState extends State<EditProductView> {
       padding: const EdgeInsets.only(bottom: 14),
       child: TextField(
         controller: ctrl,
-        style: GoogleFonts.cairo(color: Colors.white),
+        style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
         keyboardType: isNumber ? TextInputType.number : TextInputType.text,
         maxLines: maxLines,
         textDirection: TextDirection.rtl,
@@ -191,7 +191,7 @@ class _EditProductViewState extends State<EditProductView> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: GoogleFonts.cairo(color: Colors.white54),
+      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
       prefixIcon: Icon(icon, color: const Color(0xFF8B5CF6), size: 20),
       filled: true,
       fillColor: Colors.white.withOpacity(0.05),

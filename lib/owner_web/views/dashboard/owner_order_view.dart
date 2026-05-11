@@ -78,9 +78,9 @@ class OwnerOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D1A),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0A2E),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           AppStrings.get(context, 'manage_orders_title'),
@@ -97,7 +97,7 @@ class OwnerOrderView extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(AppStrings.parseMessage(context, vm.message!),
-                      style: GoogleFonts.cairo(color: Colors.white)),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onPrimary)),
                   backgroundColor: vm.message!.contains('error') || vm.message!.contains('error_msg')
                       ? Colors.red.shade700
                       : const Color(0xFF8B5CF6),
@@ -123,7 +123,7 @@ class OwnerOrderView extends StatelessWidget {
               if (orders.isEmpty) {
                 return Center(
                   child: Text(AppStrings.get(context, 'no_orders_currently'),
-                      style: GoogleFonts.cairo(color: Colors.white70, fontSize: 18)),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7), fontSize: 18)),
                 );
               }
 
@@ -179,7 +179,7 @@ class _OrderCard extends StatelessWidget {
     final dateStr = intl.DateFormat('yyyy/MM/dd HH:mm').format(order.createdAt);
 
     return Card(
-      color: Colors.white.withOpacity(0.05),
+      color: Theme.of(context).cardTheme.color,
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -205,26 +205,26 @@ class _OrderCard extends StatelessWidget {
                 Text(
                   '${AppStrings.get(context, 'order_id')}${order.id.substring(0, 8)}',
                   style: GoogleFonts.cairo(
-                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                      color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
-            const Divider(color: Colors.white24, height: 24),
+            const Divider(color: Colors.white12, height: 24),
             Text('${AppStrings.get(context, 'customer')}: ${order.customerName} - ${order.customerPhone}',
-                style: GoogleFonts.cairo(color: Colors.white70)),
+                style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
             Text('${AppStrings.get(context, 'date')}: $dateStr',
-                style: GoogleFonts.cairo(color: Colors.white70)),
+                style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
             if (order.notes != null && order.notes!.isNotEmpty)
               Text('${AppStrings.get(context, 'notes_label')}: ${order.notes}',
                   style: GoogleFonts.cairo(color: Colors.orangeAccent)),
             const SizedBox(height: 12),
             Text(
               '${AppStrings.get(context, 'items_count').replaceFirst('{count}', order.totalItems.toString())}:',
-              style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.bold),
+              style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
             ),
             ...order.items.map((item) => Text(
                   '${item.quantity}x ${item.productName} (${item.price} ${AppStrings.get(context, 'currency')})',
-                  style: GoogleFonts.cairo(color: Colors.white54),
+                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
                 )),
             const SizedBox(height: 12),
             Row(

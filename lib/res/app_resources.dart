@@ -1,22 +1,44 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Premium Color Palette
+  // Primary Palette
   static const Color primary = Color(0xFF8B5CF6); // Violet
   static const Color primaryDark = Color(0xFF7C3AED);
   static const Color secondary = Color(0xFF10B981); // Emerald
-  static const Color accent = Color(0xFFF59E0B); // Amber
+  static const Color accent = Color(0xFFD4AF37); // Gold/Amber (Luxury)
   
-  static const Color background = Color(0xFFF8FAFC);
-  static const Color surface = Colors.white;
+  // Light Theme Colors
+  static const Color lightBg = Color(0xFFF8F9FF);
+  static const Color lightSurface = Colors.white;
+  static const Color lightCard = Colors.white;
+  static const Color lightTextPrimary = Color(0xFF1E293B);
+  static const Color lightTextSecondary = Color(0xFF64748B);
+  static const Color lightBorder = Color(0xFFE2E8F0);
+  
+  // Dark Theme Colors (Premium/Luxury)
+  static const Color darkBg = Color(0xFF0D0D1A);
+  static const Color darkSurface = Color(0xFF1A1A2E);
+  static const Color darkCard = Color(0xFF1E1E38);
+  static const Color darkTextPrimary = Colors.white;
+  static const Color darkTextSecondary = Color(0xFFA0AEC0);
+  static const Color darkBorder = Color(0xFF2D2D4A);
   static const Color error = Color(0xFFEF4444);
-  
-  static const Color textPrimary = Color(0xFF1E293B);
-  static const Color textSecondary = Color(0xFF64748B);
   
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primary, Color(0xFFA78BFA)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient darkBgGradient = LinearGradient(
+    colors: [Color(0xFF0D0D1A), Color(0xFF1A0A2E), Color(0xFF2D1B4E)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient lightBgGradient = LinearGradient(
+    colors: [Color(0xFFF8F9FF), Color(0xFFE0E7FF)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

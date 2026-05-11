@@ -78,9 +78,9 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D1A),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0A2E),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           AppStrings.get(context, 'cart_and_order'),
@@ -102,7 +102,7 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
                     const SizedBox(height: 24),
                     Text(
                       AppStrings.get(context, 'login_required_order'),
-                      style: GoogleFonts.cairo(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontSize: 18, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -137,7 +137,7 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
                   Text(
                     AppStrings.get(context, 'cart_empty'),
                     style: GoogleFonts.cairo(
-                        color: Colors.white70, fontSize: 20),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7), fontSize: 20),
                   ),
                 ],
               ),
@@ -151,7 +151,7 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
               Text(
                 '${AppStrings.get(context, 'products')} (${vm.cartCount})',
                 style: GoogleFonts.cairo(
-                    color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    color: Theme.of(context).colorScheme.onSurface, fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               ...vm.cartItems.map((item) => Card(
@@ -159,9 +159,9 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: ListTile(
                       title: Text(item.productName,
-                          style: GoogleFonts.cairo(color: Colors.white)),
+                          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface)),
                       subtitle: Text('${item.price} ${AppStrings.get(context, 'currency')} x ${item.quantity}',
-                          style: GoogleFonts.cairo(color: Colors.white54)),
+                          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -173,7 +173,7 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
                           ),
                           Text('${item.quantity}',
                               style: GoogleFonts.cairo(
-                                  color: Colors.white, fontSize: 16)),
+                                  color: Theme.of(context).colorScheme.onSurface, fontSize: 16)),
                           IconButton(
                             icon: Icon(Icons.add_circle_outline,
                                 color: item.quantity >= item.maxStock ? Colors.grey : Colors.greenAccent),
@@ -198,7 +198,7 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
                   Text(
                     AppStrings.get(context, 'grand_total'),
                     style: GoogleFonts.cairo(
-                        color: Colors.white, fontSize: 18),
+                        color: Theme.of(context).colorScheme.onSurface, fontSize: 18),
                   ),
                 ],
               ),
@@ -208,7 +208,7 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
               Text(
                 AppStrings.get(context, 'delivery_info'),
                 style: GoogleFonts.cairo(
-                    color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                    color: Theme.of(context).colorScheme.onSurface, fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Form(
@@ -290,12 +290,12 @@ class _CustomerOrderViewState extends State<CustomerOrderView> {
       controller: controller,
       keyboardType: keyboardType,
       maxLines: maxLines,
-      style: GoogleFonts.cairo(color: Colors.white),
+      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
       textDirection: TextDirection.rtl,
       validator: validator,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: GoogleFonts.cairo(color: Colors.white54),
+        labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
         prefixIcon: Icon(icon, color: const Color(0xFF8B5CF6)),
         filled: true,
         fillColor: Colors.white.withOpacity(0.05),

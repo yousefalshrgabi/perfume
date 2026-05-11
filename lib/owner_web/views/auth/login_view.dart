@@ -86,16 +86,10 @@ class _LoginViewState extends State<LoginView>
         children: [
           // خلفية متدرجة
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF0D0D1A),
-                  Color(0xFF1A0A2E),
-                  Color(0xFF2D1B4E),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            decoration: BoxDecoration(
+              gradient: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.darkBgGradient
+                  : AppColors.lightBgGradient,
             ),
           ),
 
@@ -105,7 +99,7 @@ class _LoginViewState extends State<LoginView>
             right: -80,
             child: _glowCircle(
               300,
-              const Color(0xFF8B5CF6).withValues(alpha: 0.15),
+              const Color(0xFF8B5CF6).withOpacity(0.15),
             ),
           ),
           Positioned(
@@ -113,7 +107,7 @@ class _LoginViewState extends State<LoginView>
             left: -100,
             child: _glowCircle(
               350,
-              const Color(0xFFD4AF37).withValues(alpha: 0.10),
+              AppColors.accent.withOpacity(0.10),
             ),
           ),
           Positioned(
@@ -121,7 +115,7 @@ class _LoginViewState extends State<LoginView>
             right: MediaQuery.of(context).size.width * 0.1,
             child: _glowCircle(
               150,
-              const Color(0xFF8B5CF6).withValues(alpha: 0.08),
+              const Color(0xFF8B5CF6).withOpacity(0.08),
             ),
           ),
 
@@ -148,15 +142,19 @@ class _LoginViewState extends State<LoginView>
       width: 440,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 48),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.05),
+        color: Theme.of(context).brightness == Brightness.dark 
+            ? Colors.white.withOpacity(0.05) 
+            : Colors.white.withOpacity(0.8),
         borderRadius: BorderRadius.circular(28),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.12),
+          color: Theme.of(context).brightness == Brightness.dark 
+              ? Colors.white.withOpacity(0.12) 
+              : AppColors.primary.withOpacity(0.2),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF8B5CF6).withValues(alpha: 0.15),
+            color: AppColors.primary.withOpacity(0.1),
             blurRadius: 60,
             spreadRadius: 10,
           ),
@@ -180,7 +178,7 @@ class _LoginViewState extends State<LoginView>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF8B5CF6).withValues(alpha: 0.5),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.5),
                     blurRadius: 25,
                     spreadRadius: 2,
                   ),
@@ -209,7 +207,9 @@ class _LoginViewState extends State<LoginView>
               AppStrings.get(context, 'owner_login'),
               style: GoogleFonts.cairo(
                 fontSize: 14,
-                color: Colors.white54,
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.white54 
+                    : AppColors.lightTextSecondary,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -242,7 +242,9 @@ class _LoginViewState extends State<LoginView>
                   _obscurePassword
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: Colors.white38,
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.white38 
+                      : AppColors.lightTextSecondary.withOpacity(0.5),
                   size: 20,
                 ),
                 onPressed: () =>
@@ -280,7 +282,9 @@ class _LoginViewState extends State<LoginView>
                   Text(
                     AppStrings.get(context, 'remember_me'),
                     style: GoogleFonts.cairo(
-                      color: Colors.white70,
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? Colors.white70 
+                          : AppColors.lightTextPrimary,
                       fontSize: 14,
                     ),
                   ),
@@ -300,10 +304,10 @@ class _LoginViewState extends State<LoginView>
                     vertical: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.red.withValues(alpha: 0.12),
+                    color: Colors.red.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: Colors.red.withValues(alpha: 0.3),
+                      color: Colors.red.withOpacity(0.3),
                     ),
                   ),
                   child: Row(
@@ -354,7 +358,7 @@ class _LoginViewState extends State<LoginView>
                       borderRadius: BorderRadius.circular(14),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF8B5CF6).withValues(alpha: 0.4),
+                          color: const Color(0xFF8B5CF6).withOpacity(0.4),
                           blurRadius: 20,
                           offset: const Offset(0, 6),
                         ),
@@ -394,12 +398,12 @@ class _LoginViewState extends State<LoginView>
                   onPressed: vm.isLoading ? null : _handleGoogleLogin,
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: Colors.white.withOpacity(0.3),
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
-                    backgroundColor: Colors.white.withValues(alpha: 0.05),
+                    backgroundColor: Colors.white.withOpacity(0.05),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -445,21 +449,33 @@ class _LoginViewState extends State<LoginView>
             // خط فاصل
             Row(
               children: [
-                const Expanded(
-                  child: Divider(color: Colors.white12, thickness: 1),
+                Expanded(
+                  child: Divider(
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? Colors.white12 
+                        : AppColors.lightBorder, 
+                    thickness: 1
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     AppStrings.get(context, 'dashboard'),
                     style: GoogleFonts.cairo(
-                      color: Colors.white24,
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? Colors.white24 
+                          : AppColors.lightTextSecondary.withOpacity(0.3),
                       fontSize: 12,
                     ),
                   ),
                 ),
-                const Expanded(
-                  child: Divider(color: Colors.white12, thickness: 1),
+                Expanded(
+                  child: Divider(
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? Colors.white12 
+                        : AppColors.lightBorder, 
+                    thickness: 1
+                  ),
                 ),
               ],
             ),
@@ -484,29 +500,43 @@ class _LoginViewState extends State<LoginView>
       obscureText: obscureText,
       validator: validator,
       textDirection: TextDirection.ltr,
-      style: GoogleFonts.cairo(color: Colors.white, fontSize: 14),
+      style: GoogleFonts.cairo(
+        color: Theme.of(context).brightness == Brightness.dark 
+            ? Colors.white 
+            : AppColors.lightTextPrimary, 
+        fontSize: 14
+      ),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: GoogleFonts.cairo(color: Colors.white54, fontSize: 14),
-        prefixIcon: Icon(icon, color: const Color(0xFF8B5CF6), size: 20),
+        labelStyle: GoogleFonts.cairo(
+          color: Theme.of(context).brightness == Brightness.dark 
+              ? Colors.white54 
+              : AppColors.lightTextSecondary, 
+          fontSize: 14
+        ),
+        prefixIcon: Icon(icon, color: AppColors.primary, size: 20),
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: Colors.white.withValues(alpha: 0.06),
+        fillColor: Theme.of(context).brightness == Brightness.dark 
+            ? Colors.white.withOpacity(0.06) 
+            : Colors.grey.withOpacity(0.05),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(
-            color: Colors.white.withValues(alpha: 0.12),
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? Colors.white.withOpacity(0.12) 
+                : AppColors.lightBorder,
             width: 1.5,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 1.8),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.8),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(
-            color: Colors.redAccent.withValues(alpha: 0.7),
+            color: Colors.redAccent.withOpacity(0.7),
             width: 1.5,
           ),
         ),

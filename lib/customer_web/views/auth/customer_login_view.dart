@@ -42,13 +42,13 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D1A),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0A2E),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           AppStrings.get(context, 'customer_login_title'),
-          style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.bold),
+          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -59,9 +59,9 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
             width: 400,
             padding: const EdgeInsets.all(32),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.05),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+              border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1)),
             ),
             child: Form(
               key: _formKey,
@@ -75,7 +75,7 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                     style: GoogleFonts.cairo(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -88,9 +88,9 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                         margin: const EdgeInsets.only(bottom: 16),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.red.withValues(alpha: 0.1),
+                          color: Colors.red.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+                          border: Border.all(color: Colors.red.withOpacity(0.3)),
                         ),
                         child: Text(
                           AppStrings.get(context, vm.errorMessage!),
@@ -104,13 +104,13 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    style: GoogleFonts.cairo(color: Colors.white),
+                    style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
                     decoration: InputDecoration(
                       labelText: AppStrings.get(context, 'email'),
-                      labelStyle: GoogleFonts.cairo(color: Colors.white54),
+                      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
                       prefixIcon: const Icon(Icons.email, color: Color(0xFF8B5CF6)),
                       filled: true,
-                      fillColor: Colors.white.withValues(alpha: 0.05),
+                      fillColor: Colors.white.withOpacity(0.05),
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     validator: (v) => v!.isEmpty ? AppStrings.get(context, 'required_field') : null,
@@ -120,20 +120,20 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
-                    style: GoogleFonts.cairo(color: Colors.white),
+                    style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
                     decoration: InputDecoration(
                       labelText: AppStrings.get(context, 'password'),
-                      labelStyle: GoogleFonts.cairo(color: Colors.white54),
+                      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
                       prefixIcon: const Icon(Icons.lock, color: Color(0xFF8B5CF6)),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword ? Icons.visibility : Icons.visibility_off,
-                          color: Colors.white54,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                         ),
                         onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                       ),
                       filled: true,
-                      fillColor: Colors.white.withValues(alpha: 0.05),
+                      fillColor: Colors.white.withOpacity(0.05),
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     validator: (v) => v!.isEmpty ? AppStrings.get(context, 'required_field') : null,
@@ -167,7 +167,7 @@ class _CustomerLoginViewState extends State<CustomerLoginView> {
                     },
                     child: Text(
                       AppStrings.get(context, 'no_account_yet'),
-                      style: GoogleFonts.cairo(color: Colors.white70),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
                     ),
                   ),
                 ],

@@ -28,16 +28,16 @@ class _ProductsViewState extends State<ProductsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D1A),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1A0A2E),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
           AppStrings.get(context, 'manage_products'),
           style: GoogleFonts.cairo(
-              color: Colors.white, fontWeight: FontWeight.bold),
+              color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
         actions: [
           // مؤشر المنتجات غير المرفوعة
           Consumer<ProductViewModel>(
@@ -95,7 +95,7 @@ class _ProductsViewState extends State<ProductsView> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(AppStrings.parseMessage(context, vm.message!),
-                      style: GoogleFonts.cairo(color: Colors.white)),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onPrimary)),
                   backgroundColor: vm.message!.contains('error') || vm.message!.contains('error_msg')
                       ? Colors.red.shade700
                       : const Color(0xFF8B5CF6),
@@ -121,11 +121,11 @@ class _ProductsViewState extends State<ProductsView> {
                   const SizedBox(height: 16),
                   Text(AppStrings.get(context, 'no_products_yet'),
                       style: GoogleFonts.cairo(
-                          color: Colors.white54, fontSize: 18)),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 18)),
                   const SizedBox(height: 8),
                   Text(AppStrings.get(context, 'add_product_hint'),
                       style: GoogleFonts.cairo(
-                          color: Colors.white38, fontSize: 14)),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4), fontSize: 14)),
                 ],
               ),
             );
@@ -183,12 +183,12 @@ class _ProductsViewState extends State<ProductsView> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          backgroundColor: const Color(0xFF1A0A2E),
+          backgroundColor: Theme.of(context).colorScheme.surface,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: Text(AppStrings.get(context, 'add_new_product'),
               style: GoogleFonts.cairo(
-                  color: Colors.white, fontWeight: FontWeight.bold)),
+                  color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold)),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -205,9 +205,9 @@ class _ProductsViewState extends State<ProductsView> {
                 // اختيار الفئة
                 DropdownButtonFormField<String>(
                   value: selectedCategory,
-                  dropdownColor: const Color(0xFF1A0A2E),
+                  dropdownColor: Theme.of(context).colorScheme.surface,
                   decoration: _inputDecoration(AppStrings.get(context, 'category_label'), Icons.category),
-                  style: GoogleFonts.cairo(color: Colors.white),
+                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
                   items: ['men', 'women', 'unisex']
                       .map((key) => DropdownMenuItem(
                           value: key,
@@ -223,7 +223,7 @@ class _ProductsViewState extends State<ProductsView> {
             TextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(AppStrings.get(context, 'cancel'),
-                  style: GoogleFonts.cairo(color: Colors.white54)),
+                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -257,7 +257,7 @@ class _ProductsViewState extends State<ProductsView> {
       padding: const EdgeInsets.only(bottom: 12),
       child: TextField(
         controller: ctrl,
-        style: GoogleFonts.cairo(color: Colors.white),
+        style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
         keyboardType: isNumber ? TextInputType.number : TextInputType.text,
         maxLines: maxLines,
         textDirection: TextDirection.rtl,
@@ -269,7 +269,7 @@ class _ProductsViewState extends State<ProductsView> {
   InputDecoration _inputDecoration(String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: GoogleFonts.cairo(color: Colors.white54),
+      labelStyle: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
       prefixIcon: Icon(icon, color: const Color(0xFF8B5CF6), size: 20),
       filled: true,
       fillColor: Colors.white.withOpacity(0.05),
@@ -303,7 +303,7 @@ class _ProductCard extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             const Color(0xFF8B5CF6).withOpacity(0.15),
-            Colors.white.withOpacity(0.04),
+            Theme.of(context).colorScheme.onSurface.withOpacity(0.04),
           ],
         ),
         border: Border.all(color: const Color(0xFF8B5CF6).withOpacity(0.3)),
@@ -347,7 +347,7 @@ class _ProductCard extends StatelessWidget {
         title: Text(
           product.name,
           style: GoogleFonts.cairo(
-              color: Colors.white, fontWeight: FontWeight.w600),
+              color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w600),
           textDirection: TextDirection.rtl,
         ),
         subtitle: Column(
@@ -355,7 +355,7 @@ class _ProductCard extends StatelessWidget {
           children: [
             Text(
               '${product.brand} • ${product.category}',
-              style: GoogleFonts.cairo(color: Colors.white54, fontSize: 12),
+              style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), fontSize: 12),
               textDirection: TextDirection.rtl,
             ),
             const SizedBox(height: 2),
@@ -381,7 +381,7 @@ class _ProductCard extends StatelessWidget {
                 Text(
                   '${AppStrings.get(context, 'stock_label')}: ${product.stock}',
                   style:
-                      GoogleFonts.cairo(color: Colors.white38, fontSize: 11),
+                      GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4), fontSize: 11),
                 ),
               ],
             ),
@@ -418,16 +418,16 @@ class _ProductCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF1A0A2E),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(AppStrings.get(context, 'delete_product'),
-            style: GoogleFonts.cairo(color: Colors.white)),
+            style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface)),
         content: Text(AppStrings.get(context, 'confirm_delete_msg').replaceFirst('{name}', product.name),
-            style: GoogleFonts.cairo(color: Colors.white70)),
+            style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child:
-                Text(AppStrings.get(context, 'cancel'), style: GoogleFonts.cairo(color: Colors.white54)),
+                Text(AppStrings.get(context, 'cancel'), style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6))),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(

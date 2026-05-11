@@ -10,6 +10,7 @@ import 'customer_order_view.dart';
 import 'customer_profile_view.dart';
 import '../../../res/app_resources.dart';
 import '../../../services/language_provider.dart';
+import '../../../services/theme_provider.dart';
 
 /// صفحة عرض المنتجات للعميل (ويب) - قراءة فقط من Firebase
 class CustomerProductsListView extends StatefulWidget {
@@ -32,7 +33,7 @@ class _CustomerProductsListViewState extends State<CustomerProductsListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D1A),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       floatingActionButton: Consumer<CustomerOrderViewModel>(
         builder: (context, orderVm, _) {
           return FloatingActionButton.extended(
@@ -57,7 +58,7 @@ class _CustomerProductsListViewState extends State<CustomerProductsListView> {
           SliverAppBar(
             expandedHeight: 180,
             pinned: true,
-            backgroundColor: const Color(0xFF1A0A2E),
+            backgroundColor: Theme.of(context).colorScheme.surface,
             actions: [
               Consumer<CustomerAuthViewModel>(
                 builder: (context, authVm, _) {
@@ -65,7 +66,7 @@ class _CustomerProductsListViewState extends State<CustomerProductsListView> {
                     tooltip: authVm.isLoggedIn ? AppStrings.get(context, 'my_account') : AppStrings.get(context, 'login'),
                     icon: Icon(
                       authVm.isLoggedIn ? Icons.account_circle : Icons.person_outline,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSurface,
                       size: 28,
                     ),
                     onPressed: () {
@@ -83,8 +84,20 @@ class _CustomerProductsListViewState extends State<CustomerProductsListView> {
               ),
               IconButton(
                 onPressed: () => context.read<LanguageProvider>().toggleLanguage(),
-                icon: const Icon(Icons.translate, color: Colors.white),
+                icon: Icon(Icons.translate, color: Theme.of(context).colorScheme.onSurface),
                 tooltip: AppStrings.get(context, 'change_language'),
+              ),
+              IconButton(
+                onPressed: () => context.read<ThemeProvider>().toggleTheme(),
+                icon: Icon(
+                  context.watch<ThemeProvider>().isDarkMode 
+                    ? Icons.light_mode_rounded 
+                    : Icons.dark_mode_rounded,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+                tooltip: Theme.of(context).brightness == Brightness.dark 
+                    ? 'الوضع الفاتح' 
+                    : 'الوضع الليلي',
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -133,17 +146,17 @@ class _CustomerProductsListViewState extends State<CustomerProductsListView> {
                   children: [
                     // حقل البحث
                     TextField(
-                      style: GoogleFonts.cairo(color: Colors.white),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface),
                       textDirection: TextDirection.rtl,
                       onChanged: vm.search,
                       decoration: InputDecoration(
                         hintText: AppStrings.get(context, 'search_hint'),
                         hintStyle:
-                            GoogleFonts.cairo(color: Colors.white38),
+                            GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
                         prefixIcon: const Icon(Icons.search_rounded,
                             color: Color(0xFF8B5CF6)),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.07),
+                        fillColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -192,7 +205,7 @@ class _CustomerProductsListViewState extends State<CustomerProductsListView> {
                         const SizedBox(height: 16),
                         Text(AppStrings.get(context, 'no_results'),
                             style: GoogleFonts.cairo(
-                                color: Colors.white54, fontSize: 18)),
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 18)),
                       ],
                     ),
                   ),
@@ -249,17 +262,17 @@ class _CategoryChip extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: isSelected
               ? const Color(0xFF8B5CF6)
-              : Colors.white.withOpacity(0.08),
+              : Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
           border: Border.all(
             color: isSelected
-                ? const Color(0xFF8B5CF6)
-                : Colors.white.withOpacity(0.15),
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
           ),
         ),
         child: Text(
           label,
           style: GoogleFonts.cairo(
-            color: isSelected ? Colors.white : Colors.white60,
+            color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
             fontWeight:
                 isSelected ? FontWeight.bold : FontWeight.normal,
             fontSize: 13,
@@ -283,7 +296,7 @@ class _ProductCard extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             const Color(0xFF8B5CF6).withOpacity(0.12),
-            Colors.white.withOpacity(0.04),
+            Theme.of(context).colorScheme.onSurface.withOpacity(0.02),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -325,7 +338,7 @@ class _ProductCard extends StatelessWidget {
                     child: Text(
                       AppStrings.get(context, product.category),
                       style: GoogleFonts.cairo(
-                          color: Colors.white70, fontSize: 11),
+                          color: Colors.white.withOpacity(0.9), fontSize: 11),
                     ),
                   ),
                 ],
@@ -342,7 +355,7 @@ class _ProductCard extends StatelessWidget {
                 Text(
                   product.name,
                   style: GoogleFonts.cairo(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
@@ -353,7 +366,7 @@ class _ProductCard extends StatelessWidget {
                 Text(
                   product.brand,
                   style: GoogleFonts.cairo(
-                      color: Colors.white54, fontSize: 12),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), fontSize: 12),
                   textAlign: TextAlign.right,
                 ),
                 const SizedBox(height: 6),
@@ -363,7 +376,7 @@ class _ProductCard extends StatelessWidget {
                     Text(
                       product.size,
                       style: GoogleFonts.cairo(
-                          color: Colors.white38, fontSize: 11),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4), fontSize: 11),
                     ),
                     Text(
                       '${product.price.toStringAsFixed(0)} ${AppStrings.get(context, 'currency')}',
@@ -382,7 +395,7 @@ class _ProductCard extends StatelessWidget {
                     Text(
                       '${AppStrings.get(context, 'remaining')}: ${product.stock}',
                       style: GoogleFonts.cairo(
-                        color: product.stock > 0 ? Colors.white70 : Colors.redAccent,
+                        color: product.stock > 0 ? Theme.of(context).colorScheme.onSurface.withOpacity(0.7) : Colors.redAccent,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),

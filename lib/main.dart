@@ -20,7 +20,9 @@ import 'customer_web/viewmodels/customer_order_viewmodel.dart';
 import 'customer_web/viewmodels/customer_auth_viewmodel.dart';
 import 'customer_web/views/customer_products_list_view.dart';
 import 'services/language_provider.dart';
+import 'services/theme_provider.dart';
 import 'res/app_resources.dart';
+import 'res/app_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
@@ -45,8 +47,11 @@ void main() async {
 
   // ─── 3. تشغيل التطبيق المناسب ───
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => LanguageProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
       child: MyApp(initError: initError),
     ),
   );
@@ -59,6 +64,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     // عرض خطأ التهيئة إذا وجد
     if (initError != null) {
@@ -98,7 +104,9 @@ class MyApp extends StatelessWidget {
           builder: (context, lang, _) => MaterialApp(
             title: AppStrings.get(context, 'app_title', langCode: lang.currentLocale.languageCode),
             debugShowCheckedModeBanner: false,
-            theme: _appTheme(),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeProvider.themeMode,
             locale: lang.currentLocale,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
@@ -128,7 +136,9 @@ class MyApp extends StatelessWidget {
         builder: (context, lang, _) => MaterialApp(
           title: AppStrings.get(context, 'app_title', langCode: lang.currentLocale.languageCode),
           debugShowCheckedModeBanner: false,
-          theme: _appTheme(),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeProvider.themeMode,
           locale: lang.currentLocale,
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
@@ -150,9 +160,4 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  // ثيم مشترك للتطبيق
-  ThemeData _appTheme() => ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF8B5CF6)),
-    useMaterial3: true,
-  );
 }

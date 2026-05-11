@@ -32,7 +32,7 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -67,11 +67,11 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.lock_outline, size: 80, color: Colors.white54),
+                  const Icon(Icons.lock_outline, size: 80, color: Colors.grey),
                   const SizedBox(height: 20),
                   Text(
                     AppStrings.get(context, 'login_required_profile'),
-                    style: GoogleFonts.cairo(color: Colors.white, fontSize: 18),
+                    style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontSize: 18),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
@@ -96,9 +96,9 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: Colors.white.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFF8B5CF6).withValues(alpha: 0.5)),
+                  border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.5)),
                 ),
                 child: Row(
                   children: [
@@ -113,11 +113,11 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
                       children: [
                         Text(
                           user.displayName ?? AppStrings.get(context, 'no_name'),
-                          style: GoogleFonts.cairo(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           user.email ?? '',
-                          style: GoogleFonts.cairo(color: Colors.white70, fontSize: 14),
+                          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7), fontSize: 14),
                         ),
                       ],
                     ),
@@ -133,13 +133,13 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
                   children: [
                     Text(
                       AppStrings.get(context, 'previous_orders'),
-                      style: GoogleFonts.cairo(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    const Icon(Icons.history, color: Colors.white70),
+                    const Icon(Icons.history, color: Colors.grey),
                   ],
                 ),
               ),
-              const Divider(color: Colors.white24, indent: 16, endIndent: 16),
+              const Divider(color: Colors.white12, indent: 16, endIndent: 16),
 
               // قائمة الطلبات
               Expanded(
@@ -167,7 +167,7 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
                       return Center(
                         child: Text(
                           AppStrings.get(context, 'no_previous_orders'),
-                          style: GoogleFonts.cairo(color: Colors.white54, fontSize: 18),
+                          style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 18),
                         ),
                       );
                     }
@@ -213,7 +213,7 @@ class _OrderHistoryCard extends StatelessWidget {
     final dateStr = intl.DateFormat('yyyy/MM/dd HH:mm').format(order.createdAt);
 
     return Card(
-      color: Colors.white.withValues(alpha: 0.05),
+      color: Colors.white.withOpacity(0.05),
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -226,12 +226,12 @@ class _OrderHistoryCard extends StatelessWidget {
               children: [
                 Text(
                   '${AppStrings.get(context, 'order_id')}${order.id.length > 8 ? order.id.substring(0, 8) : order.id}',
-                  style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.2),
+                    color: statusColor.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: statusColor),
                   ),
@@ -243,15 +243,15 @@ class _OrderHistoryCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            Text('${AppStrings.get(context, 'date')}: $dateStr', style: GoogleFonts.cairo(color: Colors.white70, fontSize: 12)),
+            Text('${AppStrings.get(context, 'date')}: $dateStr', style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7), fontSize: 12)),
             const Divider(color: Colors.white24),
             Text(
               '${AppStrings.get(context, 'items_count').replaceFirst('{count}', order.totalItems.toString())}:',
-              style: GoogleFonts.cairo(color: Colors.white, fontWeight: FontWeight.bold),
+              style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
             ),
             ...order.items.map((item) => Text(
                   '${item.quantity}x ${item.productName} (${item.price} ${AppStrings.get(context, 'currency')})',
-                  style: GoogleFonts.cairo(color: Colors.white54, fontSize: 13),
+                  style: GoogleFonts.cairo(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 13),
                 )),
             const SizedBox(height: 8),
             Row(

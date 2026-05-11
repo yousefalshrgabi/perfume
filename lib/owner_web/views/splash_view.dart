@@ -134,7 +134,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                             letterSpacing: 4,
                             shadows: [
                               Shadow(
-                                color: const Color(0xFF8B5CF6).withValues(alpha: 0.5),
+                                color: const Color(0xFF8B5CF6).withOpacity(0.5),
                                 blurRadius: 15,
                               ),
                             ],
@@ -148,7 +148,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                             gradient: LinearGradient(
                               colors: [
                                 Colors.transparent,
-                                const Color(0xFF8B5CF6).withValues(alpha: 0.8),
+                                const Color(0xFF8B5CF6).withOpacity(0.8),
                                 Colors.transparent,
                               ],
                             ),
@@ -186,7 +186,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      const Color(0xFF8B5CF6).withValues(alpha: 0.5),
+                      const Color(0xFF8B5CF6).withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -210,7 +210,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF8B5CF6).withValues(alpha: 0.25),
+                color: const Color(0xFF8B5CF6).withOpacity(0.25),
                 blurRadius: 60,
                 spreadRadius: 25,
               ),
@@ -224,7 +224,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: const Color(0xFF8B5CF6).withValues(alpha: 0.3),
+              color: const Color(0xFF8B5CF6).withOpacity(0.3),
               width: 2,
             ),
           ),

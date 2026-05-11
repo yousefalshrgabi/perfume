@@ -7,6 +7,7 @@ import '../products/products_view.dart';
 import 'owner_order_view.dart';
 import '../../../res/app_resources.dart';
 import '../../../services/language_provider.dart';
+import '../../../services/theme_provider.dart';
 
 /// لوحة التحكم الرئيسية لصاحب العمل (جوال)
 class DashboardView extends StatelessWidget {
@@ -16,12 +17,10 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF0D0D1A), Color(0xFF1A0A2E)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+        decoration: BoxDecoration(
+          gradient: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.darkBgGradient
+              : AppColors.lightBgGradient,
         ),
         child: SafeArea(
           child: Padding(
@@ -39,14 +38,14 @@ class DashboardView extends StatelessWidget {
                         Text(
                           AppStrings.get(context, 'hello'),
                           style: GoogleFonts.cairo(
-                            color: Colors.white54,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                             fontSize: 14,
                           ),
                         ),
                         Text(
                           AppStrings.get(context, 'owner'),
                           style: GoogleFonts.cairo(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
@@ -56,10 +55,19 @@ class DashboardView extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
+                          onPressed: () => context.read<ThemeProvider>().toggleTheme(),
+                          icon: Icon(
+                            context.watch<ThemeProvider>().isDarkMode 
+                              ? Icons.light_mode_rounded 
+                              : Icons.dark_mode_rounded,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                          ),
+                        ),
+                        IconButton(
                           onPressed: () => context.read<LanguageProvider>().toggleLanguage(),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.translate_rounded,
-                            color: Colors.white54,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                           ),
                           tooltip: AppStrings.get(context, 'change_language'),
                         ),
@@ -70,9 +78,9 @@ class DashboardView extends StatelessWidget {
                               Navigator.pushReplacementNamed(context, '/login');
                             }
                           },
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.logout_rounded,
-                            color: Colors.white54,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                           ),
                           tooltip: AppStrings.get(context, 'logout'),
                         ),
@@ -84,16 +92,16 @@ class DashboardView extends StatelessWidget {
                 // شعار التطبيق
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.spa_rounded,
-                      color: Color(0xFF8B5CF6),
+                      color: AppColors.primary,
                       size: 20,
                     ),
                     const SizedBox(width: 6),
                     Text(
                       AppStrings.get(context, 'app_title'),
                       style: GoogleFonts.cairo(
-                        color: const Color(0xFF8B5CF6),
+                        color: AppColors.primary,
                         fontSize: 14,
                       ),
                     ),
@@ -106,7 +114,7 @@ class DashboardView extends StatelessWidget {
                 Text(
                   AppStrings.get(context, 'quick_actions'),
                   style: GoogleFonts.cairo(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
@@ -125,7 +133,7 @@ class DashboardView extends StatelessWidget {
                         icon: Icons.inventory_2_rounded,
                         title: AppStrings.get(context, 'manage_products'),
                         subtitle: AppStrings.get(context, 'add_edit_delete'),
-                        color: const Color(0xFF8B5CF6),
+                        color: AppColors.primary,
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -149,7 +157,7 @@ class DashboardView extends StatelessWidget {
                           title:
                               '${vm.products.where((p) => p.isSynced).length}',
                           subtitle: AppStrings.get(context, 'uploaded_firebase'),
-                          color: const Color(0xFF10B981),
+                          color: AppColors.secondary,
                         ),
                       ),
                       // كارد المنتجات غير المرفوعة (أوفلاين)
@@ -166,7 +174,7 @@ class DashboardView extends StatelessWidget {
                               : AppStrings.get(context, 'synced_local'),
                           color: vm.pendingCount > 0
                               ? Colors.orange
-                              : const Color(0xFFF59E0B),
+                              : AppColors.accent,
                         ),
                       ),
                       // كارد الطلبات
@@ -234,7 +242,7 @@ class _ActionCard extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.cairo(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onSurface,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
@@ -242,7 +250,10 @@ class _ActionCard extends StatelessWidget {
             ),
             Text(
               subtitle,
-              style: GoogleFonts.cairo(color: Colors.white54, fontSize: 11),
+              style: GoogleFonts.cairo(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), 
+                fontSize: 11
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -283,7 +294,7 @@ class _InfoCard extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.cairo(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -291,7 +302,10 @@ class _InfoCard extends StatelessWidget {
           ),
           Text(
             subtitle,
-            style: GoogleFonts.cairo(color: Colors.white54, fontSize: 11),
+            style: GoogleFonts.cairo(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6), 
+              fontSize: 11
+            ),
             textAlign: TextAlign.center,
           ),
         ],
