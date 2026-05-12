@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:excel/excel.dart';
 import 'product_model.dart';
 import '../../services/firebase_product_service.dart';
+import '../../services/database_helper.dart';
 
-/// ViewModel للمنتجات - يخزن في Hive أولاً ثم يرفع لـ Firebase
+/// ViewModel للمنتجات - يخزن في SQLite أولاً ثم يرفع لـ Firebase
 class ProductViewModel extends ChangeNotifier {
-  final Box _box = Hive.box('products');
+  final DatabaseHelper _db = DatabaseHelper.instance;
   final FirebaseProductService _service = FirebaseProductService();
 
   List<ProductModel> products = [];
@@ -24,12 +24,14 @@ class ProductViewModel extends ChangeNotifier {
   // ─── عدد المنتجات غير المرفوعة ───
   int get pendingCount => products.where((p) => !p.isSynced).length;
 
-  // ─── 1. تحميل المنتجات من Hive (محلي) ───
-  void loadProducts() {
-    products = _box.keys.map((key) {
-      final raw = Map<String, dynamic>.from(_box.get(key) as Map);
-      return ProductModel.fromMap(key.toString(), raw);
-    }).toList();
+  // ─── 1. تحميل المنتجات من SQLite (محلي) ───
+  Future<void> loadProducts() async {
+    isLoading = true;
+    notifyListeners();
+    
+    products = await _db.getAllProducts();
+    
+    isLoading = false;
     notifyListeners();
     // مزامنة من Firebase في الخلفية + رفع المنتجات المعلقة
     _syncFromFirebase();
@@ -43,9 +45,9 @@ class ProductViewModel extends ChangeNotifier {
 
       // ثانياً: جلب أحدث نسخة من Firebase
       final list = await _service.getAllProducts();
-      await _box.clear();
+      await _db.clearAll();
       for (final p in list) {
-        await _box.put(p.id, p.toMap()); // isSynced = true لأنها من Firebase
+        await _db.insertProduct(p); // isSynced = true لأنها من Firebase
       }
       products = list;
       notifyListeners();
@@ -62,9 +64,9 @@ class ProductViewModel extends ChangeNotifier {
     for (final p in pending) {
       try {
         await _service.addProduct(p);
-        // نجح الرفع: حدّث الحالة في Hive
+        // نجح الرفع: حدّث الحالة في SQLite
         final synced = p.copyWith(isSynced: true);
-        await _box.put(synced.id, synced.toMap());
+        await _db.updateProduct(synced);
         final idx = products.indexWhere((prod) => prod.id == p.id);
         if (idx != -1) products[idx] = synced;
       } catch (_) {
@@ -101,17 +103,17 @@ class ProductViewModel extends ChangeNotifier {
       isSynced: false,
     );
 
-    // ▶ الخطوة 1: احفظ في Hive فوراً (يعمل أوفلاين)
-    await _box.put(product.id, product.toMap());
+    // ▶ الخطوة 1: احفظ في SQLite فوراً (يعمل أوفلاين)
+    await _db.insertProduct(product);
     products.add(product);
     notifyListeners();
 
     // ▶ الخطوة 2: حاول الرفع لـ Firebase
     try {
       await _service.addProduct(product);
-      // نجح الرفع ✅ - حدّث isSynced في Hive
+      // نجح الرفع ✅ - حدّث isSynced في SQLite
       final synced = product.copyWith(isSynced: true);
-      await _box.put(synced.id, synced.toMap());
+      await _db.updateProduct(synced);
       final idx = products.indexWhere((p) => p.id == product.id);
       if (idx != -1) products[idx] = synced;
       message = 'product_added_firebase';
@@ -130,9 +132,9 @@ class ProductViewModel extends ChangeNotifier {
     message = null;
     notifyListeners();
 
-    // احفظ التعديل في Hive أولاً (isSynced = false مؤقتاً)
+    // احفظ التعديل في SQLite أولاً (isSynced = false مؤقتاً)
     final updated = product.copyWith(isSynced: false);
-    await _box.put(updated.id, updated.toMap());
+    await _db.updateProduct(updated);
     final idx = products.indexWhere((p) => p.id == product.id);
     if (idx != -1) products[idx] = updated;
     notifyListeners();
@@ -141,7 +143,7 @@ class ProductViewModel extends ChangeNotifier {
       await _service.updateProduct(product);
       // نجح التحديث - علّم كـ synced
       final synced = product.copyWith(isSynced: true);
-      await _box.put(synced.id, synced.toMap());
+      await _db.updateProduct(synced);
       if (idx != -1) products[idx] = synced;
       message = 'product_updated_success';
     } catch (_) {
@@ -157,7 +159,7 @@ class ProductViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    await _box.delete(id);
+    await _db.deleteProduct(id);
     products.removeWhere((p) => p.id == id);
     notifyListeners();
 
@@ -173,7 +175,6 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   // ─── 6. استيراد من ملف Excel ───
-  /// يتوقع الأعمدة: A=الاسم B=الماركة C=السعر D=الحجم E=الفئة F=الوصف G=المخزون
   Future<void> importFromExcel(List<int> bytes) async {
     isLoading = true;
     message = null;
@@ -199,22 +200,22 @@ class ProductViewModel extends ChangeNotifier {
           category: _cellStr(row, 4),
           description: _cellStr(row, 5),
           stock: int.tryParse(_cellStr(row, 6)) ?? 0,
-          isSynced: false, // غير مرفوع بعد
+          isSynced: false,
         );
 
-        // 1. Hive أولاً
-        await _box.put(product.id, product.toMap());
+        // 1. SQLite أولاً
+        await _db.insertProduct(product);
         products.add(product);
 
         // 2. حاول Firebase
         try {
           await _service.addProduct(product);
           final synced = product.copyWith(isSynced: true);
-          await _box.put(synced.id, synced.toMap());
+          await _db.updateProduct(synced);
           final idx = products.indexWhere((p) => p.id == product.id);
           if (idx != -1) products[idx] = synced;
         } catch (_) {
-          // أوفلاين - يبقى isSynced = false
+          // أوفلاين
         }
         count++;
       }
@@ -231,7 +232,6 @@ class ProductViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // مساعد: قراءة قيمة خلية كـ String
   String _cellStr(List<Data?> row, int col) {
     if (col >= row.length) return '';
     final cell = row[col];
@@ -251,14 +251,14 @@ class ProductViewModel extends ChangeNotifier {
       final newStock = (p.stock - quantity) < 0 ? 0 : p.stock - quantity;
 
       final updated = p.copyWith(stock: newStock, isSynced: false);
-      await _box.put(id, updated.toMap());
+      await _db.updateProduct(updated);
       products[idx] = updated;
       notifyListeners();
 
       try {
         await _service.decrementStock(id, quantity);
         final synced = updated.copyWith(isSynced: true);
-        await _box.put(id, synced.toMap());
+        await _db.updateProduct(synced);
         products[idx] = synced;
         notifyListeners();
       } catch (_) {}
@@ -273,14 +273,14 @@ class ProductViewModel extends ChangeNotifier {
       final newStock = p.stock + quantity;
 
       final updated = p.copyWith(stock: newStock, isSynced: false);
-      await _box.put(id, updated.toMap());
+      await _db.updateProduct(updated);
       products[idx] = updated;
       notifyListeners();
 
       try {
         await _service.incrementStock(id, quantity);
         final synced = updated.copyWith(isSynced: true);
-        await _box.put(id, synced.toMap());
+        await _db.updateProduct(synced);
         products[idx] = synced;
         notifyListeners();
       } catch (_) {}

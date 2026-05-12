@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart'; // kIsWeb
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -39,11 +38,6 @@ void main() async {
     initError = e.toString();
   }
 
-  // ─── 2. تهيئة Hive (للجوال فقط - صاحب العمل) ───
-  if (!kIsWeb) {
-    await Hive.initFlutter();
-    await Hive.openBox('products'); // فتح صندوق المنتجات المحلي
-  }
 
   // ─── 3. تشغيل التطبيق المناسب ───
   runApp(
